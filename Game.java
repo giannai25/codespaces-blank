@@ -36,33 +36,29 @@ public class Game
      */
     private void createRooms()
     {
-        Room auditoriumLobby, centerWestHallway, centerEastHallway, fortGreenePlace,
-             toNorthWestEntrance, toSouthWestEntrance, auditorium, toNorthEastEntrance,
-             toSouthEastEntrance, southEliot, murral;
+        Room stairs, babyRoom1,babyRoom2,babyBathroom, master, masterBathroom, kitchen, diningRoom, livingRoom, bathroom, upstairsHallway;
       
         // create the rooms
-        auditoriumLobby = new Room("in lobby outside the auditorium");
-        centerWestHallway = new Room("in the center west hallway");
-        centerEastHallway = new Room("in the center east hallway");
-        fortGreenePlace = new Room("outside center west on Fort Greene Place");
-        toNorthWestEntrance = new Room("looking toward the north west entrance");
-        toSouthWestEntrance = new Room("looking toard the south west entrance");
-        auditorium = new Room("Auditorium");
-        toNorthEastEntrance = new Room("looking toward the north east entrance");
-        toSouthEastEntrance = new Room("looking toward the south east entrance");
-        southEliot = new Room("outside center east on South Elliot"); 
-        murral = new Room("at the murral in the lobby");
-        auditorium = new Room("in the auditorium");
+        stairs = new Room("on the stairs");
+        babyRoom1 = new Room("in the first baby room");
+        babyRoom2 = new Room("in the second baby room");
+        master = new Room("in the master bedroom");
+        masterBathroom = new Room("in the master bathroom");
+        kitchen = new Room("in the kitchen");
+        diningRoom = new Room("in the dining room");
+        livingRoom = new Room("in the living room");
+        bathroom = new Room("in the guest bathroom");
+        upstairsHallway=new Room("in the upstairs hallway")
         
         // initialise room exits (north, east, south, west)
-        auditoriumLobby.setExits(murral, centerEastHallway, auditorium, centerWestHallway);
-        centerWestHallway.setExits(toNorthWestEntrance, auditoriumLobby, toSouthWestEntrance, fortGreenePlace);
-        centerEastHallway.setExits(toNorthEastEntrance, southEliot, toSouthEastEntrance, auditoriumLobby);
+        babyRoom1.setExits(null,null,upstairsHallway,null);
+        babyRoom2.setExits(null, null, upstairsHallway, null);
+        master.setExits(null, masterBathroom, upstairsHallway,null);
 
-        fortGreenePlace.setExits(null, centerWestHallway, null, null);
-        toNorthWestEntrance.setExits(null, null, centerWestHallway, null);
-        toSouthWestEntrance.setExits(centerWestHallway, null, null, null);
-        auditorium.setExits(auditoriumLobby, null, null, null);
+        stairs.setExits(upstairsHallway, null, livingRoom, null);
+        masterBathroom.setExits(null, null, null, master);
+        kitchen.setExits(null, null,diningRoom, livingRoom);
+        diningRoom.setExits(auditoriumLobby, null, null, null);
         murral.setExits(null, null, auditoriumLobby, null);
         southEliot.setExits(null, centerEastHallway, null, null);
         toNorthEastEntrance.setExits(null, null, centerEastHallway, null);
