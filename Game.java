@@ -21,7 +21,8 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-        
+    private  Room upstairs, stairs, babyRoom1,babyRoom2, master, masterBathroom, kitchen, diningRoom, livingRoom, bathroom, upstairsHallway,downstairs;
+    private Room chosen;
     /**
      * Create the game and initialise its internal map.
      */
@@ -36,38 +37,69 @@ public class Game
      */
     private void createRooms()
     {
-        Room stairs, babyRoom1,babyRoom2,babyBathroom, master, masterBathroom, kitchen, diningRoom, livingRoom, bathroom, upstairsHallway,downstairs;
+       // Room upstairs, stairs, babyRoom1,babyRoom2,babyBathroom, master, masterBathroom, kitchen, diningRoom, livingRoom, bathroom, upstairsHallway,downstairs, upstairs;
       
         // create the rooms
         stairs = new Room("on the stairs");
-        babyRoom1 = new Room("in the first baby room");
-        babyRoom2 = new Room("in the second baby room");
+     babyRoom1 = new Room("in the first baby room");
+       // babyRoom2 = new Room("in the second baby room");
         master = new Room("in the master bedroom");
         masterBathroom = new Room("in the master bathroom");
         kitchen = new Room("in the kitchen");
         diningRoom = new Room("in the dining room");
         livingRoom = new Room("in the living room");
-        bathroom = new Room("in the guest bathroom");
+        //bathroom = new Room("in the guest bathroom");
         upstairsHallway=new Room("in the upstairs hallway");
-        downstairs=new Room("going downstairs");
+        //downstairs=new Room("going downstairs");
+        //upstairs=new Room("going upstairs");     
+        
         
         // initialise room exits (north, east, south, west)
-        babyRoom1.setExits(null,null,upstairsHallway,null);
-        babyRoom2.setExits(null, null, upstairsHallway, null);
-        master.setExits(null, masterBathroom, upstairsHallway,null);
-        upstairsHallway.setExits(master, babyRoom1, downstairs,babyRoom2);
-        stairs.setExits(upstairsHallway, null, livingRoom, null);
-        masterBathroom.setExits(null, null, null, master);
-        kitchen.setExits(null, null,diningRoom, livingRoom);
-        diningRoom.setExits(kitchen, livingRoom, null, null);
-        downstairs.setExits(null,null,null,livingRoom);
-        livingRoom.setExits(kitchen,diningRoom,bathroom, stairs);
+        livingRoom.setExits(stairs,kitchen,null,null);
+        kitchen.setExits(null,diningRoom,null,livingRoom);
+        diningRoom.setExits(null,null,null,kitchen);
+        upstairsHallway.setExits(master,null,stairs,babyRoom1);
+        master.setExits(masterBathroom,null,upstairsHallway,null);
+        babyRoom1.setExits(null,upstairsHallway,null,null);
+      //  downstairs.setExits(null,livingRoom,null,null);
+        //upstairs.setExits(upstairsHallway,null,null,null);
         currentRoom = upstairsHallway;  // start game outside
+        stairs.setExits(upstairsHallway,null,livingRoom,null);
     }
 
     /**
      *  Main play routine.  Loops until end of play.
      */
+    public boolean randomRoom(){
+        createRooms();
+        chosen= new Room("phone is in this room");
+        int randomNum=(int)((Math.random()*8)+1);
+        if(randomNum==1){
+            chosen=babyRoom1;
+        }
+        if(randomNum==2){
+            chosen=babyRoom2;
+        }
+        if(randomNum==3){
+            chosen=master;
+        }
+        if(randomNum==4){
+            chosen=masterBathroom;
+        }
+        if(randomNum==5){
+            chosen=kitchen;
+        }
+        if(randomNum==6){
+            chosen=diningRoom;
+        }
+        if(randomNum==7){
+            chosen=livingRoom;
+        }
+        if (chosen==currentRoom){
+            return true;
+        }
+      return false;
+    }
     public void play() 
     {            
         printWelcome();
@@ -76,11 +108,12 @@ public class Game
         // execute them until the game is over.
                 
         boolean finished = false;
-        while (! finished) {
+        while (! (randomRoom()==true)&&!finished) {
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
-        System.out.println("Thank you for playing.  Good bye.");
+        
+        System.out.println("You found the phone and turned off the alarm in time!!\nThank you for playing.  Good bye.");
     }
     private void printLocationInfo(){
         if(currentRoom.getExit("north") != null) {

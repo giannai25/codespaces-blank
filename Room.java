@@ -52,12 +52,12 @@ public class Room
         if(west != null) {
             exits.put("west",west);
         }
-        if(north!=null){
-            exits.put("upstairs", north);
-        }
-        if (south!=null){
-            exits.put("downstairs", south);
-        }
+        // if(north!=null){
+        //     exits.put("upstairs", north);
+        // }
+        // if (south!=null){
+        //     exits.put("downstairs", south);
+        // }
     }
 
     /**
@@ -68,6 +68,7 @@ public class Room
         return description;
     }
     public Room getExit(String direction){
+        System.out.print(exits);
         return exits.get(direction);
     }
     public void setExit(String direction, Room neighbor){
